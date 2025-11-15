@@ -70,13 +70,10 @@ func (p *MetricProber) FetchMetricsFromTarget(client *armmonitor.MetricsClient, 
 		opts.Orderby = to.StringPtr(p.settings.MetricOrderBy)
 	}
 
-	// Azure doesn't support $segment in filter, we need to use metricFilter with wildcards
-	// and let Azure return all dimension values
-	if len(p.settings.MetricSegment) >= 1 {
-		// Don't apply segment to filter - it's not supported
-		// Instead, we rely on Azure returning timeseries with metadata for each dimension value
-		// The segment parameter is just a marker for us to know to expect multiple timeseries
-	}
+	// Note: MetricSegment parameter is kept for backwards compatibility but not used
+	// Azure doesn't support $segment in filter syntax. Use metricFilter with wildcards instead
+	// (e.g., "DimensionName eq '*'") to split metrics by dimension values
+	// Azure will automatically return timeseries with metadata for each dimension value
 
 	resourceURI := target.ResourceId
 	if strings.HasPrefix(strings.ToLower(p.settings.MetricNamespace), "microsoft.storage/storageaccounts/") {
