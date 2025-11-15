@@ -70,16 +70,12 @@ func (p *MetricProber) FetchMetricsFromTarget(client *armmonitor.MetricsClient, 
 		opts.Orderby = to.StringPtr(p.settings.MetricOrderBy)
 	}
 
-	// Apply segment parameter for dimension splitting
+	// Azure doesn't support $segment in filter, we need to use metricFilter with wildcards
+	// and let Azure return all dimension values
 	if len(p.settings.MetricSegment) >= 1 {
-		segmentClause := fmt.Sprintf("$segment=%s", p.settings.MetricSegment)
-		if len(p.settings.MetricFilter) >= 1 {
-			// Combine existing filter with segment
-			opts.Filter = to.StringPtr(p.settings.MetricFilter + " and " + segmentClause)
-		} else {
-			// Use segment only
-			opts.Filter = to.StringPtr(segmentClause)
-		}
+		// Don't apply segment to filter - it's not supported
+		// Instead, we rely on Azure returning timeseries with metadata for each dimension value
+		// The segment parameter is just a marker for us to know to expect multiple timeseries
 	}
 
 	resourceURI := target.ResourceId
