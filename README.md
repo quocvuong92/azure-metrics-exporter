@@ -1,8 +1,7 @@
 # Azure Monitor metrics exporter
 
 [![license](https://img.shields.io/github/license/webdevops/azure-metrics-exporter.svg)](https://github.com/webdevops/azure-metrics-exporter/blob/master/LICENSE)
-[![DockerHub](https://img.shields.io/badge/DockerHub-webdevops%2Fazure--metrics--exporter-blue)](https://hub.docker.com/r/webdevops/azure-metrics-exporter/)
-[![Quay.io](https://img.shields.io/badge/Quay.io-webdevops%2Fazure--metrics--exporter-blue)](https://quay.io/repository/webdevops/azure-metrics-exporter)
+[![GitHub Container Registry](https://img.shields.io/badge/ghcr.io-azure--metrics--exporter-blue)](https://github.com/webdevops/azure-metrics-exporter/pkgs/container/azure-metrics-exporter)
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/azure-metrics-exporter)](https://artifacthub.io/packages/search?repo=azure-metrics-exporter)
 
 Prometheus exporter for Azure Monitor metrics.
@@ -46,7 +45,7 @@ TOC:
 - Metric manipulation (adding, removing, updating or filtering of labels or metrics) can be done in scraping config (eg [`metric_relabel_configs`](https://prometheus.io/docs/prometheus/latest/configuration/configuration/#metric_relabel_configs))
 - Full metric [dimension support](#virtualnetworkgateway-connections-dimension-support)
 - Docker image is based on [Google's distroless](https://github.com/GoogleContainerTools/distroless) static image to reduce attack surface (no shell, no other binaries inside image)
-- Available via Docker Hub and Quay (see badges on top)
+- Available via GitHub Container Registry (see badge on top)
 - Can run non-root and with readonly root filesystem, doesn't need any capabilities (you can safely use `drop: ["All"]`)
 - Publishes Azure API rate limit metrics (when exporter sends Azure API requests, available via `/metrics`)
 
